@@ -1,30 +1,19 @@
 #include<iostream>
-#include<algorithm>
-#include<string>
+#include<cstring>
 using namespace std;
-int n;
-
-struct s{
-    string str;
-    int num;
-};
-s a[25];
-bool cmp(s a, s b){
-    if(a.str.length>b.str.length) return 1;
-    else if(a.str.length < b.str.length) return 0;
-    else{
-        return a.str>b.str;
+int maxnum,n;
+string str;
+int main(){
+    cin>>n;
+    string max2;
+    for(int i =0;i<n;i++){
+        
+        cin>>str;
+        if(str.length()>max2.length()) {max2 = str;maxnum = i+1;}
+        else if(str.length()<max2.length()) int j=0;
+        else if(max2>=str)int j=0;
+        else {max2 = str;maxnum = i+1;}
     }
-}
-int mainm(){
-    scanf("%d",&n);
-    int count = n;
-    for (int i = 0; i < count; i++)
-    {
-        getline(cin,a[i].str,'');
-        a[i].num = i+1;
-    }
-    sort(a,a+n,cmp);
-    cout<<a[0].num<<endl<<a[0];
+    cout << maxnum << endl << max2 << endl;
     
 }
