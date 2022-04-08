@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
+char str
 int main(){
-    bool a[2];
-    cout<<a[1];
+ for(int i=0;i<8;i++);
 }
