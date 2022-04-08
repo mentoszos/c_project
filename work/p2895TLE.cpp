@@ -6,6 +6,7 @@ int m,x,y;
 //bool vis[450][450];
 //bool safevis[450][450];
 int vis[450][450];
+bool vis1[405][405];
 queue<pair<int,int>> que;
 struct stone
 {
@@ -81,12 +82,14 @@ int bfs(){
            // updateVis(time_map[x][y]+1);
             if(nx<0||ny<0) continue;//越界
             //if(!vis[nx][ny]) continue;//无法走
-            if(vis[nx][ny]<=time_map[x][y]+1) continue;//无法走
+            if(vis[nx][ny]<=time_map[x][y]+1) continue;
+            if(!vis1[nx][ny]) continue;//无法走
             if(beenSafe(nx,ny)){//走到安全位置,返回时间
                 return time_map[nx][ny] = time_map[x][y]+1;
             }
             que.push({nx,ny});
             time_map[nx][ny] = time_map[x][y]+1;
+            vis1[nx][ny] =false;
         }
     }
     while (que.empty())
@@ -106,7 +109,7 @@ int main(){
             vis[i][j]=2000;
         }
     }
-   // memset(vis,-1,sizeof(vis));
+   memset(vis1,true,sizeof(vis1));
     //set_safe();
     updateVis();
     que.push({0,0});
