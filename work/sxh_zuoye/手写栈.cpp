@@ -62,7 +62,7 @@ int main(){
     printf("输入表达式(默认英文括号):\n");
     scanf("%s",chs);
     int i;
-    for(i =0;i<200;i++){//寻找第一个(
+    for(i =0;i<2.00;i++){//寻找第一个(
         if(chs[i] == '(')
             {push_seq(st,chs[i]);
             break;
