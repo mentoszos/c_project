@@ -25,9 +25,9 @@ St createSt()
 int isEmpty(St st)
 {
     if (st->t == -1)
-        return 0; //空
+        return 1; //空
     else
-        return 1; //非空
+        return 0; //非空
 }
 
 int push_seq(St st, char element)
@@ -79,7 +79,7 @@ int main()
     printf("输入表达式(默认英文括号):\n");
     scanf("%s", chs);
     int i;
-    for (i = 0; i < 2.00; i++)
+    for (i = 0; i < 200; i++)
     { //寻找第一个左括号
         if (chs[i] == '(' || chs[i] == '[' || chs[i] == '{')
         {
@@ -89,11 +89,15 @@ int main()
         else if (chs[i] == '(' || chs[i] == '[' || chs[i] == '}')
         {
             printf("不匹配\n");
+            getchar();
+            getchar();
             return 0;
         }
         if (chs[i] == '\0')
         {
             printf("表达式内无括号\n");
+            getchar();
+            getchar();
             return 0;
         }
     }
@@ -106,11 +110,15 @@ int main()
             if (isEmpty(st))
             { //栈为空
                 printf("括号不匹配\n");
+                getchar();
+                getchar();
                 return 0;
             }
             else if (top_seq(st) != '(')
             { //左括号不匹配
                 printf("括号不匹配\n");
+                getchar();
+                getchar();
                 return 0;
             }
             else
@@ -121,11 +129,15 @@ int main()
             if (isEmpty(st))
             { //栈为空
                 printf("括号不匹配\n");
+                getchar();
+                getchar();
                 return 0;
             }
             else if (top_seq(st) != '[')
             { //左括号不匹配
                 printf("括号不匹配\n");
+                getchar();
+                getchar();
                 return 0;
             }
             else
@@ -136,11 +148,15 @@ int main()
             if (isEmpty(st))
             { //栈为空
                 printf("括号不匹配\n");
+                getchar();
+                getchar();
                 return 0;
             }
             else if (top_seq(st) != '{')
             { //左括号不匹配
                 printf("括号不匹配\n");
+                getchar();
+                getchar();
                 return 0;
             }
             else
@@ -151,11 +167,15 @@ int main()
             if (isEmpty(st))//栈中无括号
             {
                 printf("匹配成功\n");
+                getchar();
+                getchar();
                 return 0;
             }
             else//栈中有括号
             {
                 printf("括号不匹配\n");
+                getchar();
+                getchar();
                 return 0;
             }
         }
