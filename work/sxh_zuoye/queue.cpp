@@ -3,8 +3,7 @@ using namespace std;
 struct Index{
     int x;
     int y;
-    int prex;
-    int prey;
+    Index* pre;
 };
 struct SeqQueue{
     int MAXNUM;
@@ -98,12 +97,10 @@ int main(){
     }
     //初始化起点和终点
     Index beginn,endd,current,nextt;
-    beginn.prex=-1;
-    beginn.prey =-1;
+    beginn.pre = NULL;
     beginn.x = beginx;
     beginn.y = beginy;
-    endd.prex = -1;
-    endd.prey = -1;
+    endd.pre =NULL;
     endd.x = endx;
     endd.y = endy;
     Que que = createQue();
@@ -114,8 +111,7 @@ int main(){
         deQueue(que);
         for(int i=0;i<4;i++){
             if(mapp[current.x+step[i][0]][current.y+step[i][1]]!=-1&&mapp[current.x+step[i][0]][current.y+step[i][1]]!=1&&current.x+step[i][0]>=0&&current.y+step[i][1]>=0&&current.x+step[i][0]<n&&current.y+step[i][1]<n){//current的下一步可访问
-                nextt.prex = current.x;
-                nextt.prey = current.y;
+                nextt.pre = &current;
                 nextt.x = current.x+step[i][0];
                 nextt.y = current.y+step[i][1];
 
@@ -127,8 +123,9 @@ int main(){
             }
         }
     }
-    if(nextt.prex==-1){
+    if(endd.pre==NULL){
         printf("无法通过迷宫");
+        getchar();
         return 0;
     }
     for(int i=0;i<n;i++){
