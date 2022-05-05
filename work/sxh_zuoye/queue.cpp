@@ -128,6 +128,6 @@ int main(){
         printf("\n");
     }
     getchar();
-    getchar();
+    getchar();//
 
 }
