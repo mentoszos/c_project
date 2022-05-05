@@ -3,7 +3,8 @@ using namespace std;
 struct Index{
     int x;
     int y;
-    Index* pre;
+    int prex;
+    int prey;
 };
 struct SeqQueue{
     int MAXNUM;
@@ -68,26 +69,16 @@ int main(){
     int endx;
     int endy;
     int n;
-    int flag=0;
     printf("输入迷宫宽度:\n");
     scanf("%d",&n);
     printf("输入迷宫:(0表示可走，-1表示障碍，1表示已走)\n");
     for(int i=0;i<n;i++){//迷宫输入
         for(int j=0;j<n;j++){
             scanf("%d",&mapp[i][j]);
-            if(mapp[i][j]==1){
-                if(flag ==0){
-                    beginx=i;
-                    beginy = j;
-                    flag =1;
-                }
-                else{
-                    endx = i;
-                    endy = j;
-                }
-            }
         }
     }
+    printf("输入迷宫起点和终点((0,0)开始)\n");
+    scanf("%d %d %d %d",&beginx,&beginy,&endx,&endy);
     //坐标检验
     if(beginx<0||beginx>=n||beginy<0||beginy>=n||endx<0||endx>=n||endy<0||endy>=n){
         printf("坐标超出范围\n");
@@ -97,10 +88,12 @@ int main(){
     }
     //初始化起点和终点
     Index beginn,endd,current,nextt;
-    beginn.pre = NULL;
+    beginn.prex=-1;
+    beginn.prey =-1;
     beginn.x = beginx;
     beginn.y = beginy;
-    endd.pre =NULL;
+    endd.prex = -1;
+    endd.prey = -1;
     endd.x = endx;
     endd.y = endy;
     Que que = createQue();
@@ -111,7 +104,8 @@ int main(){
         deQueue(que);
         for(int i=0;i<4;i++){
             if(mapp[current.x+step[i][0]][current.y+step[i][1]]!=-1&&mapp[current.x+step[i][0]][current.y+step[i][1]]!=1&&current.x+step[i][0]>=0&&current.y+step[i][1]>=0&&current.x+step[i][0]<n&&current.y+step[i][1]<n){//current的下一步可访问
-                nextt.pre = &current;
+                nextt.prex = current.x;
+                nextt.prey = current.y;
                 nextt.x = current.x+step[i][0];
                 nextt.y = current.y+step[i][1];
 
@@ -123,9 +117,8 @@ int main(){
             }
         }
     }
-    if(endd.pre==NULL){
+    if(nextt.prex==-1){
         printf("无法通过迷宫");
-        getchar();
         return 0;
     }
     for(int i=0;i<n;i++){
