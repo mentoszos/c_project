@@ -1,36 +1,32 @@
-//没写完
+
 #include<bits/stdc++.h>
 using namespace std;
-
-void makeNext(char* s1,int* next){
-    int i=0,k=-1;
-    next[0] =-1;
-    while((i<strlen(s1)-1)){
-        while(k>=0&&s1[i]!=s1[k]){i++;k++;}
-        if(s1[i]==s1[k]) next[i] = next[k];
-        else next[i] = k;
+char s[1000005];
+char t[1000005];
+int nextt[1000005];
+void makeNext(int* nextt, char* t,int len){
+    nextt[0]=-1;
+    for(int i=1;i<len;i++){
+        int lastt = nextt[i-1];
+        while(lastt!=-1 && t[lastt+1]!=t[i]) lastt = nextt[lastt];
+        if(t[lastt+1] == t[i]) lastt+=1;
+        nextt[i] = lastt;
     }
 }
-int match(char* s1, char* s2,int* next){
-    int i,j;
-    while(i<strlen(s1)&&j<strlen(s2)){
-        if(i ==-1||s1[i]==s2[i]){
-            ++i;j++;
-        }
-        else i = next[i];
+void kmp(char*s,char* t,int lenS,int lenT,int* nextt){
+    int j=-1;
+    for(int i=0;i<lenS;i++){
+        while(j!=-1 && t[j+1]!=s[i]) j =nextt[j];
+        if(t[j+1] == s[i]) j++;
+        if(j==lenT-1) printf("%d\n",i-lenT+1);
     }
-    if(i>=strlen(s1)) return (j-strlen(s1)+1);
-    else return 0;
 }
-
 int main(){
-    char s1[200];
-    char s2[200];
-    int next[100];
-    scanf("%s",s1);
-    scanf("%s",s2);
-    makeNext(s2,next);
-    int ans = match(s2,s1,next);
-    printf("%d",ans);
-
+    scanf("%s",s);
+    scanf("%s",t);
+    makeNext(nextt,t,strlen(t));
+    kmp(s,t,strlen(s),strlen(t),nextt);
+   /* for(int i=0;i<strlen(t);i++){
+        printf("%d ",nextt[i]+1);
+    }*/
 }

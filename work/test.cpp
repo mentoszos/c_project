@@ -1,51 +1,77 @@
 #include<bits/stdc++.h>
 using namespace std;
-vector<int> vec;
-vector<int> ans;
-vector<int> vec1;
-//int arr[50];
-void dfs(int cnt){
-    if(cnt >=5){
-        if(!vec.empty()){
-            for(auto element:vec){
-                vec1.push_back(element);
-            }
-        }
-        int cnt=0;
-        while(!vec1.empty()){
-            ans.push_back(vec1.back());
-            vec1.pop_back();
-            ++cnt;
-        }
-        for(auto element:ans){
-            printf("%d ",element);
-        }
-        printf("\n");
-        for(int i=0;i<cnt;i++){
-            ans.pop_back();
-        }
-        return ;
+struct Index{
+    int x;
+    int y;
+    int prex;
+    int prey;
+    int flag;
+};
+struct SeqQueue{
+    int MAXNUM;
+    int f,r;
+    Index* index;
+};
+typedef SeqQueue* Que;
+Index mapp[200][200];
+
+//创建空队列
+Que createQue(){
+    Que que = (Que)malloc(sizeof(SeqQueue));
+    if(que!=NULL){
+        que->MAXNUM = 200;//默认200;
+        que->f = 0;
+        que->r = 0;
+        que->index = (Index*)malloc(sizeof(Index)*200);
     }
-    for(int i =0;i<2;i++){
-        if(i==0){//压栈
-        vec.push_back(cnt);
-        cnt++;
-        dfs(cnt);
-        cnt--;
-        vec.pop_back();
-        }
-        if(i == 1){//出栈
-        if(vec.empty()) break;
-        ans.push_back(vec.back());
-        vec.pop_back();
-        dfs(cnt);
-        vec.push_back(ans.back());
-        ans.pop_back();
-        }
-        
+    else
+        printf("创建队列失败\n");
+    return que;
+}
+//判断是否空队列
+int isEmpty(Que que){
+    if(que->f == que->r) return 1;//空队列
+    else return 0; // 非空
+}
+
+//入队
+void enQueue(Que que,Index index){
+    if((que->r+1)%que->MAXNUM == que->f){//队满
+        printf("队满\n");
     }
+    //入队
+    que->index[que->r] = index;
+    que->r = (que->r+1)%que->MAXNUM;
+}
+
+//出队
+void deQueue(Que que){
+    if(isEmpty(que)){
+        printf("x空队列，无法出队\n");
+        return;
+    }
+    que->f = (que->f+1) %que->MAXNUM;
+}
+//取队头
+Index frontQueueX(Que que){//取x
+    if(isEmpty(que)){
+        printf("空队列，无法取队头\n");
+        Index index;
+        return index;
+    }
+    else return que->index[que->f];
 }
 int main(){
-    vec.push_back(1);
-    dfs(2);
+    Que que  = createQue();
+    Index index;
+    index.x =1;
+    printf("x of index:%d\n",index.x);
+    index.x = 2;
+    enQueue(que,index);
+    index.x = 100;
+     Index index1 =frontQueueX(que);
+    printf("x of index:%d\n",index.x);
+    printf("队头的x1为%d",index1.x);
+    getchar();
+
 }

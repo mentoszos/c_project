@@ -1,69 +1,96 @@
-<<<<<<< Updated upstream
-#include <stdio.h>
-#include <stdlib.h>
-#include <malloc.h>
-
-int main(){
-    char chs[7] = "hello";
-    for(int i =0;i<7;i++){
-        if(chs[i]=='\0'){
-            printf("hhhh");
-        }
-    }
-    getchar();}
-=======
 #include<bits/stdc++.h>
 using namespace std;
-<<<<<<< Updated upstream
-int fun1(char str[],int index,int n){ // index:字符串最后一个字符下标；n：当前数字是x位数。
-   if(index <0) return 0;
-   int temp = str[index]-48;//字符转数字
-   for(int i =0;i<n;i++){
-      temp*=10;
-   }
-   return temp+fun1(str,index-1,n+1);
+struct Index{
+    int x;
+    int y;
+    int res;//记录当前进栈次数，初始为0，第五次时弹栈
+};
+struct SeqStack
+{
+    int MAXNUM;
+    int t; //指向栈顶
+    Index* index;
+};
+typedef SeqStack *St;
+
+//用于存答案
+int ansx[200];
+int ansy[200];
+int mapp[100][100];
+
+St createSt()
+{
+    St st = (St)malloc(sizeof(SeqStack));
+    if (st != NULL)
+    {
+        st->MAXNUM = 200; //默认最大长度200
+        st->t = -1;
+        st->index = (Index *)malloc(sizeof(Index) * 200);
+    }
+    else
+        printf("创建失败");
+    return st;
 }
-int main(){
-   char str[100];
-   scanf("%s",str);
-   int i=0;
-   for(;i<100;i++){
-      if(str[i]=='\0') break;
-   }
- printf("%d",fun1(str,i-1,0));
-=======
-bool a[11];
-int cnt =0;
-//vector<int> steps;
-vector<int> ans;
-void change(int x){
-    a[x] = false;
-    int index = x;
-    while(x>0){
-        if(index+1>10) index  = 1;//若当前index为10，转到1;
-        else index+=1;
-        //手指状态转换
-        if(a[index]) a[index] =false;
-        else a[index] = true;
-        x--;//次数
+
+int isEmpty(St st)
+{
+    if (st->t == -1)
+        return 1; //空
+    else
+        return 0; //非空
+}
+
+int push_seq(St st, Index index)
+{
+    if (st->t == st->MAXNUM - 1)
+    {
+        printf("overflow\n");
+        return 0;
+    }
+    else
+    {
+        st->t = st->t + 1;
+        st->index[st->t] = index;
+        return 1;
     }
 }
-int main(){
-   memset(a,false,sizeof(a));
-   a[1]=true;
-   while (1)
-   {  int x;
-      scanf("%d",&x);
-      change(x);
-      for (int i = 1; i <= 10; i++)
-      {
-         printf("%d",a[i]);
-      }
-      printf("\n");
-      
 
-   }
-   
->>>>>>> Stashed changes
+int pop_seq(St st)
+{
+    if (st->t == -1)
+    {
+        printf("空栈\n");
+        return 0;
+    }
+    else
+    {
+        st->t = st->t - 1;
+        return 1;
+    }
 }
->>>>>>> Stashed changes
+
+Index top_seq(St st)
+{
+    if (st->t == -1)
+    {
+        printf("空栈\n");
+        Index index;
+        return index;
+    }
+    else
+    {
+        return st->index[st->t];
+    }
+}
+
+int main(){
+   St st=createSt();
+   Index i;
+   i.res=5;
+   push_seq(st,i);
+   printf("%d\n",st->t);
+   pop_seq(st);
+   printf("%d\n",st->t);
+   getchar();
+   getchar();
+}
